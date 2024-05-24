@@ -4,8 +4,12 @@
 
     <div class="container">
 
+        {% if user.is_authenticated %}
+            <a href = {% url "login" %} class="btn btn-light"> {{user.firstname}}</a>
+        {% else %}
+            <a href = {% url "login" %} class="btn btn-light"> ورود</a>
+        {% endif %}
 
-        <a href = {% url "login" %} class="btn btn-light"> ورود</a>
     
     </div>
         

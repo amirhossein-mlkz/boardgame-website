@@ -72,7 +72,7 @@ def edit_profile(request:HttpRequest):
         # name of submit button of this form in html
         if 'submit_pass_change' in request.POST:
             pass_change_form = CustomPasswordChangeForm(request.user, request.POST, prefix='pass_change_form')
-
+            
             if pass_change_form.is_valid():
                 user = pass_change_form.save()
                 update_session_auth_hash(request, user)
@@ -93,7 +93,6 @@ def edit_profile(request:HttpRequest):
         'edit_user_form': edit_user_form,
         'pass_change_form': pass_change_form,
     }
-
     template= get_template('edit_profile_page.html')
     return HttpResponse(template.render(context, request))
 

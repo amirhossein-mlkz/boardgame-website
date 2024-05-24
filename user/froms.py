@@ -15,11 +15,12 @@ PERSIAN_MESSAGES = {
 
 }
 
-class UserLoginForm(AuthenticationForm):
-    # phone_number = forms.CharField(
-    #     widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'شماره همراه'})
-    # )
+#------------------------------------------------------------------------------------------------
+#
+#
+#------------------------------------------------------------------------------------------------
 
+class UserLoginForm(AuthenticationForm):
     username = forms.CharField(
         label='شماره همراه',
         widget=forms.TextInput(attrs={'class': 'input100', 'placeholder': 'شماره همراه'})
@@ -28,6 +29,12 @@ class UserLoginForm(AuthenticationForm):
         label='رمز',
         widget=forms.PasswordInput(attrs={'class': 'input100', 'placeholder': 'رمز عبور'})
     )
+
+#------------------------------------------------------------------------------------------------
+#
+#
+#------------------------------------------------------------------------------------------------
+
 
 
 class EditUserForm(forms.ModelForm):
@@ -46,6 +53,13 @@ class EditUserForm(forms.ModelForm):
             'phone_number':PERSIAN_MESSAGES
 
         }
+
+        widgets = {
+            'phone_number': forms.TextInput(attrs={'class': 'input100'}),
+            'firstname': forms.TextInput(attrs={'class': 'input100'}),
+            'lastname': forms.TextInput(attrs={'class': 'input100'}),
+
+        }
     
     #custom extra validation for phone_number field. methos name should be clean__{fiedname}
     def clean_phone_number(self):
@@ -58,58 +72,60 @@ class EditUserForm(forms.ModelForm):
     
 
 
-
-
-
+#------------------------------------------------------------------------------------------------
+#
+#
+#------------------------------------------------------------------------------------------------
 
 class CustomPasswordChangeForm(PasswordChangeForm):
 
+    old_password = forms.CharField(
+        label='رمز عبور فعلی',
+        widget=forms.PasswordInput(attrs={'class': 'input100'} ),
+        error_messages=PERSIAN_MESSAGES
+    )
+
+    new_password1 = forms.CharField(
+        label='رمز عبور جدید',
+        widget=forms.PasswordInput(attrs={'class': 'input100'}, ),
+        error_messages=PERSIAN_MESSAGES
+    )
+
+    new_password2 = forms.CharField(
+        label='تکرار رمز عبور جدید',
+        widget=forms.PasswordInput(attrs={'class': 'input100'}),
+        error_messages=PERSIAN_MESSAGES
+    )
 
 
     def __init__(self, user: User, *args: Any, **kwargs: Any) -> None:
         super().__init__(user, *args, **kwargs)
-        self.fields['old_password'].label = 'رمز عبور فعلی'
-        self.fields['new_password1'].label = 'رمز عبور جدید'
-        self.fields['new_password2'].label = 'تکرار رمز عبور جدید'
+        self.error_messages = {
+            'password_mismatch': 'پسورد جدید با تکرار آن تطابق ندارد', 
+            'password_incorrect': 'پسورد قدیمی وارد شده اشتباه است'
+        }
 
 
-    def clean(self) -> dict[str, Any]:
-        cleaned_data = super().clean()
-        old_password = cleaned_data.get('old_password')
-        new_password1 = cleaned_data.get('new_password1')
-        new_password2 = cleaned_data.get('new_password2')
+    
+    # def clean(self) -> dict[str, Any]:
+    #     cleaned_data = super().clean()
+    #     old_password = cleaned_data.get('old_password')
+    #     new_password1 = cleaned_data.get('new_password1')
+    #     new_password2 = cleaned_data.get('new_password2')
 
 
-        if not old_password or not new_password1 or not new_password2:
-            raise forms.ValidationError(_('وارد کردن همه فیلدها ضروری است'))
+    #     if not old_password or not new_password1 or not new_password2:
+    #         raise forms.ValidationError(_('وارد کردن همه فیلدها ضروری است'))
+
+
+    #     if old_password and not self.user.check_password(old_password):
+    #         raise forms.ValidationError(_('رمز عبور فعلی نادرست است'))
         
-        return cleaned_data
-
-
-        # if old_password and not self.user.check_password(old_password):
-        #     raise forms.ValidationError(_('رمز عبور فعلی نادرست است'))
-        
-        # if new_password1 and new_password2 and new_password1!=new_password2:
-        #     raise forms.ValidationError(_('پسورد جدید با تکرار آن مطابقت ندارد'))
+    #     if new_password1 and new_password2 and new_password1!=new_password2:
+    #         raise forms.ValidationError(_('پسورد جدید با تکرار آن مطابقت ندارد'))
         
         
-        # return cleaned_data
+    #     return cleaned_data
 
 
 
-# # class CustomPasswordChangeForm(PasswordChangeForm):
-
-#     old_password = forms.CharField(
-#         label='رمز عبور فعلی',
-#         widget=forms.PasswordInput(attrs={'class': 'input100'})
-#     )
-
-#     new_password1 = forms.CharField(
-#         label='رمز عبور جدید',
-#         widget=forms.PasswordInput(attrs={'class': 'input100'})
-#     )
-
-#     new_password2 = forms.CharField(
-#         label='تکرار رمز عبور جدید',
-#         widget=forms.PasswordInput(attrs={'class': 'input100'})
-#     )
