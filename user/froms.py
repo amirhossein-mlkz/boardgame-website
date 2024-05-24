@@ -1,7 +1,7 @@
 from typing import Any
 from django import forms
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
@@ -29,7 +29,48 @@ class UserLoginForm(AuthenticationForm):
         label='رمز',
         widget=forms.PasswordInput(attrs={'class': 'input100', 'placeholder': 'رمز عبور'})
     )
+#------------------------------------------------------------------------------------------------
+#
+#
+#------------------------------------------------------------------------------------------------
 
+class UserRegisterForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['phone_number', 'lastname', 'firstname', 'password1', 'password2']
+        labels = {
+            'phone_number':'شماره همراه',
+            'lastname':'نام خانوادگی',
+            'firstname':'نام',
+            'password1':'رمز عبور',
+            'password2':'تکرار رمز عبور',
+        }
+        error_messages = {
+            'lastname':PERSIAN_MESSAGES,
+            'firstname':PERSIAN_MESSAGES,
+            'phone_number':PERSIAN_MESSAGES,
+            'password1':PERSIAN_MESSAGES,
+            'password2':PERSIAN_MESSAGES,
+
+        }
+
+        widgets = {
+            'phone_number': forms.TextInput(attrs={'class': 'input100'}),
+            'firstname': forms.TextInput(attrs={'class': 'input100'}),
+            'lastname': forms.TextInput(attrs={'class': 'input100'}),
+            'password1': forms.PasswordInput(attrs={'class': 'input100'}),
+            'password2': forms.PasswordInput(attrs={'class': 'input100'}),
+
+        }
+
+    #custom extra validation for phone_number field. methos name should be clean__{fiedname}
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data['phone_number']
+        try :
+            int(phone_number)
+        except:
+            raise ValidationError(_("شماره موبایل معتبر نیست"))
+        return phone_number
 #------------------------------------------------------------------------------------------------
 #
 #
@@ -44,21 +85,19 @@ class EditUserForm(forms.ModelForm):
         labels = {
             'phone_number':'شماره همراه',
             'lastname':'نام خانوادگی',
-            'firstname':'نام'
+            'firstname':'نام',
         }
 
         error_messages = {
             'lastname':PERSIAN_MESSAGES,
             'firstname':PERSIAN_MESSAGES,
-            'phone_number':PERSIAN_MESSAGES
-
+            'phone_number':PERSIAN_MESSAGES,
         }
 
         widgets = {
             'phone_number': forms.TextInput(attrs={'class': 'input100'}),
             'firstname': forms.TextInput(attrs={'class': 'input100'}),
             'lastname': forms.TextInput(attrs={'class': 'input100'}),
-
         }
     
     #custom extra validation for phone_number field. methos name should be clean__{fiedname}

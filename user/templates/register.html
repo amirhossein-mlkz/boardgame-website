@@ -16,26 +16,30 @@
             {% csrf_token %}
 
             <span class="login100-form-title p-b-48">
-                خوش آمدید
+                ثبت نام در سایت
             </span>
+            
+            {% for field in form %}
+                <div class="wrap-input100 validate-input" data-validate="Enter password">
+                    <span class="btn-show-pass">
+                        <i class="zmdi zmdi-eye"></i>
+                    </span>
+                    <div>
+                        {{field.label_tag}}
+                    </div>
 
-            <div class="wrap-input100 validate-input" data-validate="Enter password">
-                <span class="btn-show-pass">
-                    <i class="zmdi zmdi-eye"></i>
-                </span>
-                {{ form.username.label_tag }}
-                {{ form.username }}
-                <span class="focus-input100" data-placeholder=""></span>
-            </div>
+                    {% for error in field.errors %}
+                            <p class="error-message"> {{ error }} </p>
+                    {% endfor %}
 
-            <div class="wrap-input100 validate-input" data-validate="Enter password">
-                <span class="btn-show-pass">
-                    <i class="zmdi zmdi-eye"></i>
-                </span>
-                {{ form.password.label_tag }}
-                {{ form.password }}
-                <span class="focus-input100" data-placeholder=""></span>
-            </div>
+                    <div>
+                        {{ field }}
+                    </div>
+                    <span class="focus-input100" data-placeholder=""></span>
+                </div>
+            {% endfor %}
+
+           
 
             {% comment %} <div class="wrap-input100 validate-input">
                 {{ form.username.label_tag }}
@@ -49,7 +53,7 @@
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
                             <button type="submit" class="login100-form-btn">
-                                ورود
+                                ثبت نام
                             </button>
 
 						</div>
@@ -69,15 +73,7 @@
                     </div>
                 {% endif %}
                 
-                    <div class="text-center p-t-20">
-						<span class="txt1">
-							حساب کاربری ندارید؟
-						</span>
 
-						<a class="txt2" href={% url "register" %}>
-							ثبت نام
-						</a>
-					</div>
             
          
             

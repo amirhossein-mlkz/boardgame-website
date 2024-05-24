@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, update_session_auth_hash
 from django.template.loader import get_template
 from django.contrib import messages
 
-from .froms import UserLoginForm, EditUserForm, CustomPasswordChangeForm
+from .froms import UserLoginForm, EditUserForm, CustomPasswordChangeForm, UserRegisterForm
 from .models import User
 
 def login(request:HttpRequest):
@@ -37,6 +37,30 @@ def login(request:HttpRequest):
         "form": form
     }
     return HttpResponse(template.render(context=context, request=request))
+
+
+
+
+def register(request:HttpRequest):
+    template = get_template('register.html')
+
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request.POST, user)
+            return redirect('home')
+
+    
+    else:
+        form = UserRegisterForm()
+    context = {
+        'form':form
+    }
+    return HttpResponse(template.render(context=context, request=request))
+    
+
+
 
 
 
