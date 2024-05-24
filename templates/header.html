@@ -1,17 +1,26 @@
 <!-- Start Header/Navigation -->
 {% load static %}
-<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+<nav class="custom-header navbar navbar-marketing navbar-expand-lg shadow navbar-light  p-2" arial-label="Furni navigation bar">
 
+    {% comment %} <div class="container"> {% endcomment %}
     <div class="container">
-
+        <div class="topnav" id="myTopnav">
+            <a href={% url "home" %} class="active">خانه</a>
+           
+        </div>
+    </div>
+    
+    
+    <div class="navbar-brand text-black">
         {% if user.is_authenticated %}
             <a href = {% url "login" %} class="btn btn-light"> {{user.firstname}}</a>
         {% else %}
             <a href = {% url "login" %} class="btn btn-light"> ورود</a>
         {% endif %}
-
-    
     </div>
+    
+    
+    {% comment %} </div> {% endcomment %}
         
 </nav>
 <!-- End Header/Navigation -->
