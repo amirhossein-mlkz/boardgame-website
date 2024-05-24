@@ -24,7 +24,6 @@ urlpatterns = [
     #path('user/', include('player.urls')),
     path('', include('user.urls')),
     path('', view=views.home, name = 'home' ),
-    path('', include('userPanel.urls'))
 
 
 

@@ -1,4 +1,39 @@
 .dashboard-menu{
-    background-color: aqua;
+    background-color: rgb(35, 35, 35);
     min-height: 100vh;
 }
+
+.dashboard-contentP{
+    background-color: rgb(222, 222, 222);
+    min-height: 100vh;
+
+}
+
+
+.menu-item-container{
+    display: flex;
+    align-items: stretch;
+    background: transparent;
+    border-top: 2px solid rgba(69, 69, 69, 0.459);
+    border-bottom: 2px solid rgba(69, 69, 69, 0.459);
+    width: 100%;
+    
+
+}
+
+
+.menu-item-container:hover{
+    background: rgb(92, 41, 96)
+
+}
+
+.menu-item{
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    width: 100%;
+    padding: 15px 20px 15px 10px;
+}
+
+
+

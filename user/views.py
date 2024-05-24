@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth import login as auth_login
-from django.contrib.auth import authenticate
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import authenticate, update_session_auth_hash
 from django.template.loader import get_template
 from django.contrib import messages
 
-from .froms import UserLoginForm
+from .froms import UserLoginForm, EditUserForm, CustomPasswordChangeForm
+from .models import User
 
 def login(request:HttpRequest):
 
@@ -39,3 +41,63 @@ def login(request:HttpRequest):
 
 
 
+def logedin(request:HttpRequest):
+    template= get_template('dashboard.html')
+    return HttpResponse(template.render({}, request))
+
+
+def edit_profile(request:HttpRequest):
+
+    if not request.user.is_authenticated:  # بررسی می‌کنیم که کاربر قبلاً لاگین کرده یا خیر
+        return redirect('home')
+    
+    #get loggedin user object
+    username = request.user.get_username()
+
+    user = get_object_or_404(User, phone_number=username)
+    if request.method == 'POST':
+
+        
+        if 'submit_edit_user' in request.POST:
+            edit_user_form = EditUserForm(request.POST, instance=user, prefix='edit_user_form')
+            if edit_user_form.is_valid():
+                edit_user_form.save()
+                messages.success(request, 'اطلاعات با موفقیت بروزرسانی شد')
+            else:
+                messages.error(request, 'اطلاعات وارد شده صحیح نمی‌باشد')
+        else:
+            edit_user_form = EditUserForm(instance=user, prefix='edit_user_form')
+
+
+        # name of submit button of this form in html
+        if 'submit_pass_change' in request.POST:
+            pass_change_form = CustomPasswordChangeForm(request.user, request.POST, prefix='pass_change_form')
+
+            if pass_change_form.is_valid():
+                user = pass_change_form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, 'رمز با موفقیت تغییر کرد')
+            else:
+                messages.error(request, 'تغییر رمز ناموق بود')
+        else:
+            pass_change_form = CustomPasswordChangeForm(user=user, prefix='pass_change_form')
+
+
+
+    else:
+        edit_user_form = EditUserForm(instance=user, prefix='edit_user_form')
+        pass_change_form = CustomPasswordChangeForm(user=user, prefix='pass_change_form')
+
+
+    context = {
+        'edit_user_form': edit_user_form,
+        'pass_change_form': pass_change_form,
+    }
+
+    template= get_template('edit_profile_page.html')
+    return HttpResponse(template.render(context, request))
+
+
+def logout_view(request:HttpRequest):
+    auth_logout(request)
+    return redirect('home')

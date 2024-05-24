@@ -1,10 +1,32 @@
-input {
-	outline: none;
-	border: none;
+@font-face {
+  font-family: "iransans";
+    src: url('/static/fonts/iransans_medium.eot'); /* IE9 Compat Modes */
+    src: url('/static/fonts/iransans_medium.woff2') format('woff2'), /* Super Modern Browsers */
+         url('/static/fonts/iransans_medium.woff') format('woff'), /* Pretty Modern Browsers */
+         url('/static/fonts/iransans_medium.ttf')  format('truetype'); /* Safari, Android, iOS */
 }
 
-body{
-    direction: rtl;
-    text-align: right;
+@font-face {
+  font-family: "iransans";
+  src: url('/static/fonts/iransans_medium.eot'); /* IE9 Compat Modes */
+  src: url('/static/fonts/iransans_medium.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/iransans_medium.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/static/fonts/iransans_medium.ttf')  format('truetype'); /* Safari, Android, iOS */
+  font-weight: bold;
 }
 
+body {
+  overflow-x: hidden;
+  position: relative; 
+
+}
+
+body {
+  font-family: "iransans", sans-serif;
+
+  font-weight: 400;
+  line-height: 28px;
+  color: #6a6a6a;
+  font-size: 14px;
+  direction: rtl;
+  background-color: #eff2f1; }

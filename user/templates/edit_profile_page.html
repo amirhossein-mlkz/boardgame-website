@@ -1,0 +1,181 @@
+{% extends "dashboard.html" %}
+{% load static %}
+
+{% block head %}
+    <link href={% static "css\dashboard.css" %} rel="stylesheet">
+    <link href={% static "css\user_forms.css" %} rel="stylesheet">
+{% endblock %}
+
+
+
+{% block dashboard_content %}
+
+<div class="row p-1">
+    {% if messages %}
+                    <div class="messages p-t-24">
+                        {% for message in messages %}
+                        <div class="col-sm-12">
+                            <div class="custom-alert" role="alert" data-brk-library="component__alert">
+       
+                              <strong class="font__weight-semibold">پیغام: </strong> {{ message }}
+                            </div>
+                          </div>
+                         
+                        {% endfor %}
+                    </div>
+    {% endif %}
+</div>
+
+<div class="container-login100 row">
+    
+    <div class="wrap-login100 col-l-6">
+        
+        <form method="post" novalidate class="login100-form validate-form" name="edit_user_form">
+            {% csrf_token %}
+
+            <span class="login100-form-title p-b-48">
+                ویرایش پروفایل
+            </span>
+
+            {% for field in edit_user_form %}
+
+                <div class="wrap-input100 validate-input" data-validate="Enter password">
+                    <span class="btn-show-pass">
+                        <i class="zmdi zmdi-eye"></i>
+                    </span>
+                    {% comment %} {{ form.username.label_tag }} {% endcomment %}
+                    <div>
+                        {{field.label_tag}}
+                    </div>
+
+                    {% for error in field.errors %}
+                            <p class="error-message"> {{ error }} </p>
+                    {% endfor %}
+
+                    <div>
+                        {{ field }}
+                    </div>
+                
+                </div>
+
+                    
+                        
+                    
+                    <span class="focus-input100" data-placeholder=""></span>
+                    
+
+            {% endfor %}
+
+            {% comment %} <div class="wrap-input100 validate-input">
+                {{ form.username.label_tag }}
+                
+            </div>
+            <div class="wrap-input100 validate-input">
+                
+            </div> {% endcomment %}
+
+            <div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+                            <button type="submit" class="login100-form-btn" name="submit_edit_user">
+                                ثبت تغییرات
+                            </button>
+
+						</div>
+			</div>
+
+                    {% comment %} {% if messages %}
+                    <div class="messages p-t-24">
+                        {% for message in messages %}
+                        <div class="col-sm-12">
+                            <div class="custom-alert" role="alert" data-brk-library="component__alert">
+       
+                              <strong class="font__weight-semibold">خطا: </strong> {{ message }}
+                            </div>
+                          </div>
+                         
+                        {% endfor %}
+                    </div>
+                {% endif %}          {% endcomment %}
+            
+        </form>
+
+    </div>
+
+        <!-- ______________________PASSWORD CHANGE__________________________________-->
+        <!-- ______________________PASSWORD CHANGE__________________________________-->
+        <!-- ______________________PASSWORD CHANGE__________________________________-->
+        <!-- ______________________PASSWORD CHANGE__________________________________-->
+        <!-- ______________________PASSWORD CHANGE__________________________________-->
+        <div class="wrap-login100 col-l-6">
+        
+            <form method="post" novalidate class="login100-form validate-form" name="pass_change_form">
+                {% csrf_token %}
+    
+                <span class="login100-form-title p-b-48">
+                    تغییر رمز عبور
+                </span>
+    
+                {% for field in pass_change_form %}
+    
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <span class="btn-show-pass">
+                            <i class="zmdi zmdi-eye"></i>
+                        </span>
+                        {% comment %} {{ form.username.label_tag }} {% endcomment %}
+                        <div>
+                            {{field.label}}
+                        </div>
+                        
+                        {% for error in field.errors %}
+                            <p class="error-message"> {{ error }} </p>
+                        {% endfor %}
+                        
+                        <div>
+                            {{ field }}
+                        </div>
+                        <span class="focus-input100" data-placeholder=""></span>
+                        
+                    </div>
+    
+                {% endfor %}
+    
+                {% comment %} <div class="wrap-input100 validate-input">
+                    {{ form.username.label_tag }}
+                    
+                </div>
+                <div class="wrap-input100 validate-input">
+                    
+                </div> {% endcomment %}
+    
+                <div class="container-login100-form-btn">
+                            <div class="wrap-login100-form-btn">
+                                <div class="login100-form-bgbtn"></div>
+                                <button type="submit" class="login100-form-btn" name="submit_pass_change">
+                                    تغییر رمز
+                                </button>
+    
+                            </div>
+                </div>
+    
+                        {% comment %} {% if messages %}
+                        <div class="messages p-t-24">
+                            {% for message in messages %}
+                            <div class="col-sm-12">
+                                <div class="custom-alert" role="alert" data-brk-library="component__alert">
+           
+                                  <strong class="font__weight-semibold">خطا: </strong> {{ message }}
+                                </div>
+                              </div>
+                             
+                            {% endfor %}
+                        </div>
+                    {% endif %}          {% endcomment %}
+                
+            </form>
+       
+        
+    </div>
+</div>
+
+{% endblock dashboard_content %}
