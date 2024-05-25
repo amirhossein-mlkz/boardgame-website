@@ -35,32 +35,46 @@ class UserLoginForm(AuthenticationForm):
 #------------------------------------------------------------------------------------------------
 
 class UserRegisterForm(UserCreationForm):
+    #we define password again only for change labels of them. beacuse
+    #the passwords aren't in the field of User(custom user) and so we cant
+    #change them label by Meta class
+    password1 = forms.CharField(
+        label='رمز عبور',
+        strip=False,
+        error_messages=PERSIAN_MESSAGES,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+    )
+    password2 = forms.CharField(
+        label='تکرار رمز عبور',
+        error_messages=PERSIAN_MESSAGES,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        strip=False,
+
+    )
+    
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+        self.error_messages['password_mismatch'] = 'پسورد جدید با تکرار آن تطابق ندارد', 
+
+
     class Meta:
         model = User
-        fields = ['phone_number', 'lastname', 'firstname', 'password1', 'password2']
+        fields = ['phone_number', 'lastname', 'firstname']
         labels = {
             'phone_number':'شماره همراه',
             'lastname':'نام خانوادگی',
             'firstname':'نام',
-            'password1':'رمز عبور',
-            'password2':'تکرار رمز عبور',
         }
         error_messages = {
             'lastname':PERSIAN_MESSAGES,
             'firstname':PERSIAN_MESSAGES,
             'phone_number':PERSIAN_MESSAGES,
-            'password1':PERSIAN_MESSAGES,
-            'password2':PERSIAN_MESSAGES,
-
         }
 
         widgets = {
             'phone_number': forms.TextInput(attrs={'class': 'input100'}),
             'firstname': forms.TextInput(attrs={'class': 'input100'}),
             'lastname': forms.TextInput(attrs={'class': 'input100'}),
-            'password1': forms.PasswordInput(attrs={'class': 'input100'}),
-            'password2': forms.PasswordInput(attrs={'class': 'input100'}),
-
         }
 
     #custom extra validation for phone_number field. methos name should be clean__{fiedname}

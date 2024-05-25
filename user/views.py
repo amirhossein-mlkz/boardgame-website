@@ -42,13 +42,16 @@ def login(request:HttpRequest):
 
 
 def register(request:HttpRequest):
+    if request.user.is_authenticated:  # بررسی می‌کنیم که کاربر قبلاً لاگین کرده یا خیر
+        return redirect('dashboard')
+    
     template = get_template('register.html')
 
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            auth_login(request.POST, user)
+            auth_login(request, user)
             return redirect('home')
 
     
