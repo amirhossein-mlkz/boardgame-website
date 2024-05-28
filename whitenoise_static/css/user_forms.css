@@ -9,7 +9,9 @@
 }
 
 
-
+.error-message{
+  color: #ba2f2f !important;
+}
 
 
 
@@ -169,6 +171,8 @@
   
   .wrap-login100 {
     width: 390px;
+    height: 100vh;
+    margin: 10px;
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -180,6 +184,8 @@
     -o-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     -ms-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
   }
+
+
   
   
   /*------------------------------------------------------------------
