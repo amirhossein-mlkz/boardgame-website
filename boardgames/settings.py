@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django_rename_app',
     #'player',
     'user',
-    'Game'
+    'Game',
+    'notifications',
 ]
 
 MIDDLEWARE = [
@@ -130,6 +131,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #                                Custom Setting Added
 #-----------------------------------------------------------------------------------
 AUTH_USER_MODEL = 'user.User'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR/ 'media'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'whitenoise_static'

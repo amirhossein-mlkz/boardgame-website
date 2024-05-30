@@ -1,0 +1,39 @@
+<!-- myapp/templates/myapp/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Object</title>
+    <style>
+        .messages {
+            list-style-type: none;
+            padding: 0;
+        }
+        .messages li {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .messages li.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p>بازی با موفقیت حذف شد.</p> <!-- پیغام به کاربر -->
+    
+    <script>
+        // تابعی برای انتقال به صفحه اصلی بعد از 2 ثانیه
+        setTimeout(function() {
+            window.location.href = "{% url 'index' %}";
+        }, 2000); // 2000 میلی‌ثانیه معادل با 2 ثانیه است
+    </script>
+</body>
+</html>

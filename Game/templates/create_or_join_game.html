@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+<link href="{% static 'css/create_or_join_game.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block content %}
+<div class="form-wrapper">
+    <div class="form-container">
+        <h2>ایجاد بازی</h2>
+
+        <form method="post" novalidate class="login100-form validate-form">
+            {% csrf_token %}
+
+            {% for field in create_game_from %}
+                <div class="form-group">
+                    <div>
+                        {{ field.label_tag }}
+                    </div>
+                    {% for error in field.errors %}
+                        <p class="error-message">{{ error }}</p>
+                    {% endfor %}
+                    <div>
+                        {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="button-container">
+                <button name="submit_create_game" type="submit" class="login100-form-btn">
+                    ایجاد بازی
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+
+    <div class="form-container">
+        <h2>ورود به بازی</h2>
+
+        <form method="post" novalidate class="login100-form validate-form">
+            {% csrf_token %}
+
+            {% for field in join_game_form %}
+                <div class="form-group">
+                    <div>
+                        {{ field.label_tag }}
+                    </div>
+                    {% for error in field.errors %}
+                        <p class="error-message">{{ error }}</p>
+                    {% endfor %}
+                    <div>
+                        {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="button-container">
+                <button name="submit_join_game" type="submit" class="login100-form-btn">
+                    عضویت
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

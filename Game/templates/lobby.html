@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link href="{% static 'css/lobby.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="game-info-box">
+    <div class="game-code-container">
+        <h3>کد بازی: {{ game.id }}</h3>
+    </div>
+
+    {% if is_creator and game.is_team %}
+        <form method="post" class="create-team-form">
+            {% csrf_token %}
+            {% for field in create_team_form %}
+                {{ field.label_tag }}
+                {% for error in field.errors %}
+                    <p class="error-message">{{ error }}</p>
+                {% endfor %}
+                {{ field }}
+            {% endfor %}
+            <button type="submit" name="submit_create_team" class="btn-action btn-create">ایجاد تیم</button>
+        </form>
+    {% endif %}
+
+    <div class="action-buttons">
+        {% if is_creator %}
+            <form action="{% url 'remove_game' game_id=game.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn-action btn-delete">حذف بازی</button>
+            </form>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="submit_start_game" class="btn-action btn-start">شروع بازی</button>
+        </form>
+    </div>
+
+
+</div>
+
+
+
+<div class="players-container">
+    <h3>بازیکنان</h3>
+    <ul>
+        {% for player in all_players %}
+            <li class="player-item">
+                <div class="player-info">
+                    {{ player.user.firstname }} - {{ player.user.lastname }}
+                </div>
+                <div class="player-actions">
+                    {% if is_creator and player.user != game.creator_user %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="player_id" value="{{ player.id }}">
+                            <button type="submit" name="submit_remove_player" class="btn-action btn-delete">حذف</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div>
+    {% if game.is_team %}
+        <div class="teams-container">
+            {% for teamdata in teams_data %}
+                <div class="team-card">
+                    <h5 class="team-title">عنوان تیم: {{ teamdata.team.name }}</h5>
+                    <h6>اعضا:</h6>
+                    <ul>
+                        {% for player in teamdata.players %}
+                            <li>{{ player.user.firstname }} {{ player.user.lastname }}</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="team-actions">
+                        {% if is_creator %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="team_id" value="{{ teamdata.team.id }}">
+                                <button type="submit" name="submit_remove_team" class="btn-action btn-delete">حذف</button>
+                            </form>
+                        {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="team_id" value="{{ teamdata.team.id }}">
+                            <button type="submit" name="submit_join_team" class="btn-action btn-join">عضویت</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

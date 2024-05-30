@@ -1,27 +1,20 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-}
-
 .form-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    min-height: 100vh;
 }
 
 .form-container {
     background-color: white;
-    padding: 20px;
+    padding: 50px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-width: 500px;
+    width: 100%;
+    max-width: 400px; /* عرض کمتر */
     text-align: center;
+    margin: 20px; /* فاصله بیرونی */
+    direction: rtl; /* تنظیم راست به چپ */
 }
 
 h2 {
@@ -29,32 +22,34 @@ h2 {
 }
 
 .form-group {
-    margin-bottom: 15px;
-    text-align: left;
+    margin-bottom: 30px; /* فاصله بین فیلدها */
 }
 
 .form-group div {
     margin-bottom: 5px;
+    text-align: right; /* تنظیم راست به چپ */
 }
 
 .error-message {
-    color: red;
+    color: rgb(173, 61, 61);
     font-size: 0.9em;
-    margin: 5px 0;
+    margin-top: 5px; /* فاصله بین فیلد و خطا */
+    margin-bottom: -5px;
+    text-align: right;   
 }
 
 input, select, textarea {
     width: calc(100% - 20px);
     padding: 10px 10px 10px 0;
     border: none;
-    border-bottom: 2px solid #007bff;
+    border-bottom: 3px solid #1c3b5d;
     outline: none;
     background-color: transparent;
     box-sizing: border-box;
 }
 
 input:focus, select:focus, textarea:focus {
-    border-bottom: 2px solid #0056b3;
+    border-bottom: 3px solid #ff6666;
 }
 
 .button-container {
@@ -62,7 +57,17 @@ input:focus, select:focus, textarea:focus {
 }
 
 .login100-form-btn {
-    background-color: #007bff;
+    background-image: linear-gradient(to right, #2f2f89, #ff6666);
+    width: 100%;
     color: white;
     border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+
+}
+
+.login100-form-btn:hover {
+    background-color: #0056b3;
 }

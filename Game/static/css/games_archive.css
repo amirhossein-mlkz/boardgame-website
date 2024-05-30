@@ -1,0 +1,51 @@
+/* games_archive.css */
+
+/* White card with shadow */
+.card {
+    background-color: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    transition: transform 0.3s; /* Add smooth transition for scaling */
+    display: inline-block;
+    width: calc(33.33% - 40px); /* 33.33% width with some margin */
+    max-width: 300px; /* Maximum width for larger screens */
+    text-align: center; /* Center content */
+}
+
+/* Center the game name and set its color to gray */
+.card h2 {
+    color: #888; /* Gray color */
+}
+
+/* Horizontal line separator */
+.card hr {
+    border: none;
+    border-top: 1px solid #ccc; /* Gray color */
+    margin: 10px 0; /* Margin top and bottom */
+}
+
+/* On hover, scale down the card */
+.card:hover {
+    transform: scale(0.95);
+}
+
+/* Clearfix to ensure proper layout */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* For mobile devices, display one game per row */
+@media screen and (max-width: 600px) {
+    .card {
+        width: calc(100% - 40px); /* Full width with some margin */
+    }
+}
+
+/* Constrain the size of the images */
+.card img {
+    max-width: 100%; /* Ensure image does not exceed the width of its container */
+    height: auto; /* Maintain aspect ratio */
+}

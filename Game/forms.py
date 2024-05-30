@@ -3,7 +3,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
-from . models import Game
+from . models import Game, Team
 
 PERSIAN_MESSAGES = {
     'required': 'این فیلد ضروری است',
@@ -49,3 +49,55 @@ class creatGameForm(forms.Form):
             self.add_error('password2', ValidationError(_('رمز عبور با تکرار آن مطابقت ندارد')))
         
         return cleaned_data
+
+
+
+class JoinGameForm(forms.Form):
+    game_id = forms.CharField(
+        label='کد بازی',
+        strip=False,
+        error_messages=PERSIAN_MESSAGES,
+        widget=forms.PasswordInput(),
+    )
+
+    password = forms.CharField(
+        label='رمز عبور',
+        error_messages=PERSIAN_MESSAGES,
+        widget=forms.PasswordInput(),
+        strip=False,
+
+    )
+
+
+    def clean(self,):
+        cleaned_data = super().clean()
+        game_id = cleaned_data.get('game_id')
+        password = cleaned_data.get('password')
+
+        try:
+            game = Game.objects.get(id=game_id)
+            if game.password != password:
+                self.add_error('password', ValidationError(_("رمز وارد شده نادرست است")))
+
+
+        except:
+            self.add_error('game_id', ValidationError(_("بازی با کد وارد شده یافت نشد")))
+
+  
+        
+        return cleaned_data
+
+
+
+class CreatTeamForm(forms.ModelForm):
+    
+    class Meta:
+        model = Team
+        fields = ("name",)
+        error_messages = {
+            'name':PERSIAN_MESSAGES,
+        }
+
+        labels = {
+            'name':'نام تیم'
+        }

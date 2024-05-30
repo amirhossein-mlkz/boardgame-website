@@ -82,7 +82,7 @@ def edit_profile(request:HttpRequest):
     user = get_object_or_404(User, phone_number=username)
     if request.method == 'POST':
 
-        
+        # name of submit button of this form in html
         if 'submit_edit_user' in request.POST:
             edit_user_form = EditUserForm(request.POST, instance=user, prefix='edit_user_form')
             if edit_user_form.is_valid():
